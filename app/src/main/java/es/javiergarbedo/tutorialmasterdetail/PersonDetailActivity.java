@@ -5,7 +5,9 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v4.app.NavUtils;
 import android.view.MenuItem;
@@ -56,6 +58,63 @@ public class PersonDetailActivity extends ActionBarActivity {
 //                    .add(R.id.person_detail_container, fragment)
 //                    .commit();
 //        }
+
+        /*
+        Las siguientes líneas de código muestran pestañas en la Activity para poder pasar de una
+        página a otra usando las pestañas, además de que se puedan pasar arrastrándo las páginas
+        lateralmente como se ha hecho en el código anterior.
+        Para las clases FragmentTransaction y ActionBar añadir los import:
+            import android.support.v4.app.FragmentTransaction;
+            import android.support.v7.app.ActionBar;
+        en lugar de la otra posibilidad que sería:
+            import android.app.FragmentTransaction;
+            import android.app.ActionBar;
+        Usando los paquetes support se ofrece la posibilidad de usar las clases FragmentTransaction
+        y ActionBar en dispositivos con API antigua que no soportaba esas clases.
+        */
+
+        //Obtener una referencia a la barra de acciones de la Activity porque en ella se situarán
+        //  las pestañas, y se especifica que se va a usar el modo de navegación con pestañas (tabs)
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
+
+        // Se debe crear un TabListener para que se puedan añadir acciones a los cambios de
+        //  selección que realice el usuario en las pestañas.
+        ActionBar.TabListener tabListener = new ActionBar.TabListener() {
+            //Se ha seleccionado una pestaña
+            public void onTabSelected(ActionBar.Tab tab, FragmentTransaction ft) {
+                //Cambiar a la página correspondiente a la pestaña seleccionada
+                mViewPager.setCurrentItem(tab.getPosition());
+            }
+
+            public void onTabUnselected(ActionBar.Tab tab, FragmentTransaction ft) {
+            }
+
+            public void onTabReselected(ActionBar.Tab tab, FragmentTransaction ft) {
+            }
+
+        };
+
+        //Indica aquí los títulos que van a tener las pestañas. Se crearán tantas pestañas como
+        //  títulos se indiquen en este array.
+        String titles[] = {"Tab1", "Tab2", "Tab3"};
+        for (int i = 0; i < titles.length; i++) {
+            actionBar.addTab(
+                    actionBar.newTab()
+                            .setText(titles[i])
+                            .setTabListener(tabListener));
+        }
+
+        //Cuando el usuario cambie de página usando el arrastre lateral en lugar de las pestañas,
+        //  también se debe cambiar de pestaña seleccionada
+        mViewPager.setOnPageChangeListener(
+                new ViewPager.SimpleOnPageChangeListener() {
+                    @Override
+                    public void onPageSelected(int position) {
+                        getSupportActionBar().setSelectedNavigationItem(position);
+                    }
+                });
+
     }
 
     @Override
@@ -92,7 +151,7 @@ public class PersonDetailActivity extends ActionBarActivity {
             //Se pasa al fragment el id de la posición seleccionada por el usuario en la lista
             arguments.putString(PersonDetailFragment.ARG_ITEM_ID,
                     getIntent().getStringExtra(PersonDetailFragment.ARG_ITEM_ID));
-            switch(position) {
+            switch (position) {
                 case 0:
                     //Se indica el Fragment que se cargará para la position 0
                     PersonDetailFragment fragment1 = new PersonDetailFragment();
