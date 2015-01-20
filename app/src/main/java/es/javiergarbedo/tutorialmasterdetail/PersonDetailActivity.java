@@ -6,11 +6,13 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.app.NavUtils;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
-import android.support.v4.app.NavUtils;
 import android.view.MenuItem;
+
+import com.google.android.gms.maps.model.LatLng;
 
 /*
 Modificaciones realizadas en la Activity encargada de mostrar el detalle en una aplicación de tipo
@@ -28,6 +30,8 @@ public class PersonDetailActivity extends ActionBarActivity {
      */
     SectionsPagerAdapter mSectionsPagerAdapter;
     ViewPager mViewPager;
+
+    final LatLng YEREVAN = new LatLng(40.181, 44.513);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -163,6 +167,11 @@ public class PersonDetailActivity extends ActionBarActivity {
                     PersonDetailFragment2 fragment2 = new PersonDetailFragment2();
                     fragment2.setArguments(arguments);
                     return fragment2;
+                case 2:
+                    return MyMapFragment.newInstance(YEREVAN);
+//                    PersonDetailFragment3 fragment3 = new PersonDetailFragment3();
+//                    fragment3.setArguments(arguments);
+//                    return fragment3;
             }
             return null;
         }
@@ -174,7 +183,7 @@ public class PersonDetailActivity extends ActionBarActivity {
         @Override
         public int getCount() {
             // TODO: Indicar aquí el número de pestañas que se van a tener
-            return 2;
+            return 3;
         }
 
         /*
