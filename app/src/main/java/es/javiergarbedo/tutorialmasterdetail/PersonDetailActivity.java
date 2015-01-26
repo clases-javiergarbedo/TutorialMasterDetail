@@ -168,7 +168,8 @@ public class PersonDetailActivity extends ActionBarActivity {
                     fragment2.setArguments(arguments);
                     return fragment2;
                 case 2:
-                    return MyMapFragment.newInstance(YEREVAN);
+//                    return MyMapFragment.newInstance(YEREVAN);
+                    return new MyMapFragment();
 //                    PersonDetailFragment3 fragment3 = new PersonDetailFragment3();
 //                    fragment3.setArguments(arguments);
 //                    return fragment3;

@@ -3,13 +3,14 @@ package es.javiergarbedo.tutorialmasterdetail;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
+
+import com.google.android.gms.maps.model.LatLng;
 
 
 /**
@@ -30,6 +31,8 @@ import android.support.v7.app.ActionBarActivity;
  */
 public class PersonListActivity extends ActionBarActivity
         implements PersonListFragment.Callbacks {
+
+    final LatLng YEREVAN = new LatLng(40.181, 44.513);
 
     /**
      * Whether or not the activity is in two-pane mode, i.e. running on a tablet
@@ -169,6 +172,11 @@ public class PersonListActivity extends ActionBarActivity
                     PersonDetailFragment2 fragment2 = new PersonDetailFragment2();
                     fragment2.setArguments(arguments);
                     return fragment2;
+                case 2:
+//                    return MyMapFragment.newInstance(YEREVAN);
+//                    PersonDetailFragment3 fragment3 = new PersonDetailFragment3();
+//                    fragment3.setArguments(arguments);
+//                    return fragment3;
             }
             return null;
         }
@@ -180,7 +188,7 @@ public class PersonListActivity extends ActionBarActivity
         @Override
         public int getCount() {
             // TODO: Indicar aquí el número de pestañas que se van a tener
-            return 2;
+            return 3;
         }
 
         /*
